@@ -7,7 +7,6 @@ import {FlatList, RectButton} from 'react-native-gesture-handler';
 // I18nManager.allowRTL(true);
 
 import AppleStyleSwipeableRow from './AppleStyleSwipeableRow';
-import GmailStyleSwipeableRow from './GmailStyleSwipeableRow';
 
 const Row = ({item}) => (
   <RectButton style={styles.rectButton} onPress={() => alert(item.from)}>
@@ -22,32 +21,26 @@ const Row = ({item}) => (
 );
 
 const SwipeableRow = ({item, index}) => {
-  if (index % 2 === 0) {
-    return (
-      <AppleStyleSwipeableRow>
-        <Row item={item} />
-      </AppleStyleSwipeableRow>
-    );
-  } else {
-    return (
-      <GmailStyleSwipeableRow>
-        <Row item={item} />
-      </GmailStyleSwipeableRow>
-    );
-  }
+  return (
+    <AppleStyleSwipeableRow>
+      <Row item={item} />
+    </AppleStyleSwipeableRow>
+  );
 };
 
 export default class Example extends Component {
   render() {
     return (
-      <FlatList
-        data={DATA}
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
-        renderItem={({item, index}) => (
-          <SwipeableRow item={item} index={index} />
-        )}
-        keyExtractor={(item, index) => `message ${index}`}
-      />
+      <View style={{flex: 1}}>
+        <FlatList
+          data={DATA}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
+          renderItem={({item, index}) => (
+            <SwipeableRow item={item} index={index} />
+          )}
+          keyExtractor={(item, index) => `message ${index}`}
+        />
+      </View>
     );
   }
 }
