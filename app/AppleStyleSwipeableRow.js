@@ -26,12 +26,14 @@ export default class AppleStyleSwipeableRow extends Component {
     );
   };
   renderRightAction = (text, color, x, progress) => {
+    const {onPressRight} = this.props;
     const trans = progress.interpolate({
       inputRange: [0, 1],
       outputRange: [x, 0],
     });
     const pressHandler = () => {
       this.close();
+      onPressRight();
       alert(text);
     };
     return (
