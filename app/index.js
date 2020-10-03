@@ -24,8 +24,8 @@ const Row = ({item}) => {
 
 const SwipeableRow = ({item, index}) => {
   const onPressRight = useCallback(
-    (text) => {
-      console.log(text);
+    (type) => {
+      console.log(type);
       console.log('Current Item', item);
     },
     [item],
@@ -40,7 +40,7 @@ const SwipeableRow = ({item, index}) => {
 export default class Example extends Component {
   render() {
     return (
-      <View style={{flex: 1}}>
+      <View style={styles.container}>
         <FlatList
           data={DATA}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
@@ -55,6 +55,9 @@ export default class Example extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   rectButton: {
     flex: 1,
     height: 80,
