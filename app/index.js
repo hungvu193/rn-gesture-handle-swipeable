@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useCallback} from 'react';
 import {StyleSheet, Text, View, I18nManager} from 'react-native';
 
 import {FlatList, RectButton} from 'react-native-gesture-handler';
@@ -8,21 +8,30 @@ import {FlatList, RectButton} from 'react-native-gesture-handler';
 
 import AppleStyleSwipeableRow from './AppleStyleSwipeableRow';
 
-const Row = ({item}) => (
-  <RectButton style={styles.rectButton} onPress={() => alert(item.from)}>
-    <Text style={styles.fromText}>{item.from}</Text>
-    <Text numberOfLines={2} style={styles.messageText}>
-      {item.message}
-    </Text>
-    <Text style={styles.dateText}>
-      {item.when} {'❭'}
-    </Text>
-  </RectButton>
-);
+const Row = ({item}) => {
+  return (
+    <RectButton style={styles.rectButton} onPress={() => alert(item.from)}>
+      <Text style={styles.fromText}>{item.from}</Text>
+      <Text numberOfLines={2} style={styles.messageText}>
+        {item.message}
+      </Text>
+      <Text style={styles.dateText}>
+        {item.when} {'❭'}
+      </Text>
+    </RectButton>
+  );
+};
 
 const SwipeableRow = ({item, index}) => {
+  const onPressRight = useCallback(
+    (type) => {
+      console.log(type);
+      console.log('Current Item', item);
+    },
+    [item],
+  );
   return (
-    <AppleStyleSwipeableRow>
+    <AppleStyleSwipeableRow onPressRight={onPressRight}>
       <Row item={item} />
     </AppleStyleSwipeableRow>
   );
@@ -31,7 +40,7 @@ const SwipeableRow = ({item, index}) => {
 export default class Example extends Component {
   render() {
     return (
-      <View style={{flex: 1}}>
+      <View style={styles.container}>
         <FlatList
           data={DATA}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
@@ -46,6 +55,9 @@ export default class Example extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   rectButton: {
     flex: 1,
     height: 80,

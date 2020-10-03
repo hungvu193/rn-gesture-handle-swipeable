@@ -25,13 +25,15 @@ export default class AppleStyleSwipeableRow extends Component {
       </RectButton>
     );
   };
-  renderRightAction = (text, color, x, progress) => {
+  renderRightAction = (text, color, x, progress, type) => {
+    const {onPressRight} = this.props;
     const trans = progress.interpolate({
       inputRange: [0, 1],
       outputRange: [x, 0],
     });
     const pressHandler = () => {
       this.close();
+      onPressRight(type);
       alert(text);
     };
     return (
@@ -50,9 +52,9 @@ export default class AppleStyleSwipeableRow extends Component {
         width: 192,
         flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
       }}>
-      {this.renderRightAction('More', '#C8C7CD', 192, progress)}
-      {this.renderRightAction('Flag', '#ffab00', 128, progress)}
-      {this.renderRightAction('More', '#dd2c00', 64, progress)}
+      {this.renderRightAction('More', '#C8C7CD', 192, progress, 'buttonMore')}
+      {this.renderRightAction('Flag', '#ffab00', 128, progress, 'buttonFlag')}
+      {this.renderRightAction('Del', '#dd2c00', 64, progress, 'buttonDel')}
     </View>
   );
   updateRef = (ref) => {
